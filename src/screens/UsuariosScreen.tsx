@@ -5,20 +5,20 @@ import { ScrollView } from 'react-native'
 import { DataTable } from 'react-native-paper';
 import { HeaderTitle } from '../components/HeaderTitle';
 import usuariosApi from '../helper/usuariosApi';
-import { Usuarios } from '../interfaces/interfaces';
+import { UserResponse, Usuario } from '../interfaces/interfaces';
 import { styles } from '../theme/style';
 
 export const UsuariosScreen = () => {
 
-    const [usuarios, setUsuarios] = useState<Usuarios[]>([]);
+    const [usuarios, setUsuarios] = useState<Usuario[]>([]);
     useEffect(() => {
         getUsuarios();
         console.log(usuarios);
     }, [])
 
     const getUsuarios = async () => {
-        const resp = await usuariosApi.get('/users');
-        setUsuarios(resp.data);
+        const resp = await usuariosApi.get<UserResponse>('/users');
+        setUsuarios(resp.data.usuario);
     }
 
     return (
